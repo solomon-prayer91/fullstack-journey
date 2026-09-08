@@ -1,0 +1,3 @@
+HTML is not a programming language, but a markup language it add structure to a webpage, think of it like the skeleton of a person.
+CSS is to add beauty to a webpage, for example the clothes that a person wears.
+JAVASCRIPT is the brain of the person that makes the person able to talk,walk and so more.

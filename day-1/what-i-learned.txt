@@ -1,0 +1,2 @@
+I learned about what a client, server, and browser Is.
+So from what I understand, A client is simply a customer, a server is the place that holds the client order or product, while the browser is the delivery guy that brings the product or order to the client.
