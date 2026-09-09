@@ -54,12 +54,25 @@
             border: none; background: #24292f; color: white; 
             width: 100%;">Show Contact</button>
 
-            <p id="contact" style="display: none; margin-top: 10px; 
-            background: #f0f2f5; padding: 10px; border-radius: 8px; 
-            font-size: 14px;">
-            Email: soloventures01@gmail.com <br>
-            GitHub: github.com/solomon-prayer91
-            </p>
+            <div id="contact" style="display: none; text-align: left; margin-top: 15px; ">
+                <input id="visitorName" type="text" placeholder="Your Name" style="width: 100%; 
+                padding: 10px; margin: 6px 0; border-radius: 6px; border: 1px solid #ccc; 
+                box-sizing: border-box; ">
+
+                <input id="visitorEmail" type="email" placeholder="Your Email" style="width: 100%; 
+                padding: 10px; margin: 6px 0; border-radius: 6px; border: 1px solid #ccc; 
+                box-sizing: border-box; ">
+
+                <textarea id="visitorMessage" placeholder="Your Message" rows="3" 
+                style="width: 100%; padding: 10px; margin: 6px 0; border-radius: 6px; border: 1px solid #ccc; 
+                box-sizing: border-box; "></textarea>
+
+                <button onclick="sendMessage()" style="width: 100%; padding: 12px; background: #24292f; 
+                color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 5px; ">
+                Send Message </button>
+                <p id="formStatus" style="font-size: 13px; margin-top: 8px; text-align: center; "></p>
+
+            </div>
 
             <button onclick="toggleTheme()" style="margin-top: 10px; 
             padding: 10px 20px; cursor:pointer; border-radius: 8px; 
