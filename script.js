@@ -71,31 +71,54 @@ function sendMessage() {
   displayMessages(); // refresh the list
 }
 
-function displayMessages() {
+  function displayMessages() {
   let container = document.getElementById("savedMessages");
   let messages = JSON.parse(localStorage.getItem("myMessages")) || [];
 
   if (messages.length === 0) {
-    container.innerHTML = "<i>No messages yet</i>";
+    container.innerHTML = "<i style='color:#999;'>No messages yet - be the first!</i>";
     return;
   }
 
   let html = "";
-  // Show newest first
   for (let i = messages.length - 1; i >= 0; i--) {
     let m = messages[i];
-    html += `<div style="background:#f0f2f5; padding:8px; border-radius:6px; margin-bottom:6px;">
-      <b>${m.name}</b> (${m.email})<br>
-      ${m.message}<br>
-      <small style="color:#888;">${m.date}</small>
+    // i is the real index in the array, we need it to delete
+    let realIndex = i;
+    html += `<div style="background:#f0f2f5; padding:10px; border-radius:8px; margin-bottom:8px; position:relative; border-left:4px solid #24292f;">
+      <div style="display:flex; justify-content:space-between;">
+        <b style="color:#24292f;">${m.name}</b>
+        <span style="display:flex; gap:8px; align-items:center;">
+          <small style="color:#888;">${m.date}</small>
+          <button onclick="deleteMessage(${realIndex})" style="background:#ff4444; color:white; border:none; border-radius:50%; width:22px; height:22px; cursor:pointer; font-size:12px; line-height:1;">X</button>
+        </span>
+      </div>
+      <div style="font-size:12px; color:#666; margin:2px 0;">${m.email}</div>
+      <div style="margin-top:4px;">${m.message}</div>
     </div>`;
   }
   container.innerHTML = html;
 }
 
+function deleteMessage(index) {
+  // Get all messages
+  let messages = JSON.parse(localStorage.getItem("myMessages")) || [];
+
+  // Remove 1 item at position index
+  messages.splice(index, 1);
+
+  // Save back
+  localStorage.setItem("myMessages", JSON.stringify(messages));
+
+  // Refresh display
+  displayMessages();
+}
+
 function clearAllMessages() {
-  if (confirm("Clear all saved messages?")) {
+  if (confirm("Are you sure? This will delete all saved messages!")) {
     localStorage.removeItem("myMessages");
     displayMessages();
   }
 }
+
+  

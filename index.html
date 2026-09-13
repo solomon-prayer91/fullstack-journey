@@ -71,12 +71,14 @@
                 color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 5px; ">
                 Send Message </button>
                 <p id="formStatus" style="font-size: 13px; margin-top: 8px; text-align: center; "></p>
-
             </div>
 
-            <div id="messageList" style="margin-top: 20px; text-align: left;">
-                <h3 style="font-size: 16px; margin-bottom: 10px;">Saved Messages (local):</h3>
-                <div id="savedMessages" style="font-size: 13px; color: #555;"></div>
+            <div id="messageList" style="margin-top:20px; text-align:left;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="font-size:16px; margin-bottom:10px;">Saved Messages (local):</h3>
+                <button onclick="clearAllMessages()" style="font-size:12px; padding:5px 10px; background:#ff4444; color:white; border:none; border-radius:6px; cursor:pointer;">Clear All</button>
+            </div>
+            <div id="savedMessages" style="font-size:13px; color:#555;"></div>
             </div>
 
             <button onclick="toggleTheme()" style="margin-top: 10px; 
