@@ -1,12 +1,12 @@
 // Day 9 - Save messages with localStorage
 console.log("Day 9 loaded - with memory!");
 
-function showContact() {
-  let contactInfo = document.getElementById("contact");
-  if (contactInfo.style.display === "none") {
-    contactInfo.style.display = "block";
+  function showContact() {
+  let contactForm = document.getElementById("contactForm");
+  if (contactForm.style.display === "none" || contactForm.style.display === "") {
+    contactForm.style.display = "block";
   } else {
-    contactInfo.style.display = "none";
+    contactForm.style.display = "none";
   }
 }
 
@@ -27,7 +27,9 @@ window.addEventListener("load", function() {
   displayMessages(); // show saved messages on load
 });
 
-function sendMessage() {
+   async function sendMessage(event) {
+  if (event) event.preventDefault(); // stop page reload
+
   let name = document.getElementById("visitorName").value.trim();
   let email = document.getElementById("visitorEmail").value.trim();
   let message = document.getElementById("visitorMessage").value.trim();
@@ -45,31 +47,47 @@ function sendMessage() {
     return;
   }
 
-  // === NEW DAY 9 PART ===
-  // 1. Get old messages from localStorage or start empty array
+  status.textContent = "Sending...";
+  status.style.color = "#666";
+
+  // 1. Save locally first (your Day 9-10 logic)
   let messages = JSON.parse(localStorage.getItem("myMessages")) || [];
-
-  // 2. Add new message with date
-  let newMsg = {
-    name: name,
-    email: email,
-    message: message,
-    date: new Date().toLocaleString()
-  };
-  messages.push(newMsg);
-
-  // 3. Save back to localStorage
+  messages.push({ name, email, message, date: new Date().toLocaleString() });
   localStorage.setItem("myMessages", JSON.stringify(messages));
+  displayMessages();
 
-  status.textContent = "Thanks " + name + "! Message saved locally!";
-  status.style.color = "green";
+  // 2. Send to real email via FormSubmit
+  try {
+    let form = document.getElementById("contactForm");
+    let formData = new FormData(form);
+    
+    let response = await fetch(form.action, {
+      method: "POST",
+      body: formData
+    });
 
-  document.getElementById("visitorName").value = "";
-  document.getElementById("visitorEmail").value = "";
-  document.getElementById("visitorMessage").value = "";
-
-  displayMessages(); // refresh the list
+    if (response.ok) {
+      status.textContent = "Thanks " + name + "! Message sent to my real inbox!";
+      status.style.color = "green";
+      form.reset();
+    } else {
+      status.textContent = "Saved locally, but email failed. I will see it in local list.";
+      status.style.color = "orange";
+    }
+  } catch (err) {
+    status.textContent = "Saved locally! Email needs internet, check later.";
+    status.style.color = "orange";
+    console.log("Email error:", err);
+  }
 }
+
+// Connect new form submit to function
+document.addEventListener("DOMContentLoaded", function() {
+  let form = document.getElementById("contactForm");
+  if (form) {
+    form.addEventListener("submit", sendMessage);
+  }
+});
 
   function displayMessages() {
   let container = document.getElementById("savedMessages");
